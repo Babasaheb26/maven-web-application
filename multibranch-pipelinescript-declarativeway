@@ -1,0 +1,31 @@
+pipeline{
+
+agent any
+tools{
+maven "maven3.8.6"
+}
+stages{
+stage('CheckOutCode'){
+steps{
+git branch: 'development', credentialsId: 'd9f54c81-e740-4d26-93e9-db650db43dec', url: 'https://github.com/Babasaheb26/maven-web-application.git'
+}
+}
+
+stage('Test and Build'){
+steps{
+parallel(
+Test: {
+sh "mvn test"
+},
+Build: {
+sh "mvn package"
+}
+)//parallel keyword block closing
+}
+}
+
+
+    
+    
+}//stages closing
+}//pipeline closing
